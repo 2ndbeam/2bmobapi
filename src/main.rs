@@ -8,7 +8,7 @@ fn index() -> &'static str {
     Multiplication:\t/mul?first=<A>&second=<B>\n
     Division:\t\t/div?first=<A>&second=<B>\n
     Integer Division:\t/div2?first=<A>&second=<B>\n
-    Modulo:\t\t/mod?first=<A>&second=<B>\n
+    Remainder:\t\t/rem?first=<A>&second=<B>\n
     Sine (rad):\t\t/sin/rad?arg=<A>\n
     Sine (deg):\t\t/sin/deg?arg=<A>\n
     Cosine (rad):\t/cos/rad?arg=<A>\n
@@ -50,8 +50,8 @@ fn div2(first: isize, second: isize) -> String {
     format!("{}", first / second)
 }
 
-#[get("/mod?<first>&<second>")]
-fn modulo(first: f64, second: f64) -> String {
+#[get("/rem?<first>&<second>")]
+fn rem(first: f64, second: f64) -> String {
     if second == 0.0 {
         return String::from("Division by zero")
     }
@@ -127,7 +127,7 @@ fn sqr(arg: f64) -> String {
 
 #[shuttle_runtime::main]
 async fn main() -> shuttle_rocket::ShuttleRocket {
-    let rocket = rocket::build().mount("/", routes![index, add, sub, mul, div, div2, modulo, sin_rad, sin_deg, cos_rad, cos_deg, tan_rad, tan_deg, sqrt, sqr]);
+    let rocket = rocket::build().mount("/", routes![index, add, sub, mul, div, div2, rem, sin_rad, sin_deg, cos_rad, cos_deg, tan_rad, tan_deg, sqrt, sqr]);
 
     Ok(rocket.into())
 }
